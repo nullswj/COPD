@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.swj.copd.fragment.PMFragment;
+import com.swj.copd.fragment.SpoFragment;
 import com.swj.copd.fragment.TemperatureFragment;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +23,8 @@ public class DisplayActivity extends AppCompatActivity {
     private Fragment temperatureFragment;
 
     private Fragment pmFragment;
+
+    private Fragment spoFragment;
 
     private Fragment[] fragments;
 
@@ -51,6 +54,10 @@ public class DisplayActivity extends AppCompatActivity {
                     return true;
                 case R.id.navigation_notifications:
                     mTextMessage.setText(R.string.title_notifications);
+                    if(lastFragment != 2)
+                    {
+                        switchFragment(lastFragment,2);
+                    }
                     return true;
             }
             return false;
@@ -71,7 +78,8 @@ public class DisplayActivity extends AppCompatActivity {
         mTextMessage = findViewById(R.id.message);
         temperatureFragment = TemperatureFragment.newInstance();
         pmFragment = PMFragment.newInstance();
-        fragments = new Fragment[]{temperatureFragment,pmFragment};
+        spoFragment = SpoFragment.newInstance();
+        fragments = new Fragment[]{temperatureFragment,pmFragment,spoFragment};
 
         switchFragment(lastFragment,0);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -88,5 +96,4 @@ public class DisplayActivity extends AppCompatActivity {
         }
         transaction.show(fragments[index]).commitAllowingStateLoss();
     }
-
 }

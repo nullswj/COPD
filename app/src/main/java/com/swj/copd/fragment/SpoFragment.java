@@ -23,24 +23,25 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.swj.copd.service.DataIntentService.PM25_RECEIVE_MESSAGE;
+import static com.swj.copd.service.DataIntentService.XUEYANG_RECEIVE_MESSAGE;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
  * to handle interaction events.
- * Use the {@link PMFragment#newInstance} factory method to
+ * Use the {@link SpoFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class PMFragment extends Fragment {
+public class SpoFragment extends Fragment {
 
-    private LineView pmChart;
+    private LineView spoChart;
 
     private List<String> xValues = new ArrayList<>();
 
     private List<Float> yValues = new ArrayList<>();
 
     private List<String> yLables = new ArrayList<>();   //y轴显示
+
 
     private MessageReceiver receiver;
 
@@ -59,7 +60,7 @@ public class PMFragment extends Fragment {
         yLables.add("11");
     }
 
-    public PMFragment() {
+    public SpoFragment() {
         // Required empty public constructor
     }
 
@@ -67,11 +68,11 @@ public class PMFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @return A new instance of fragment PMFragment.
+     * @return A new instance of fragment SpoFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static PMFragment newInstance() {
-        PMFragment fragment = new PMFragment();
+    public static SpoFragment newInstance() {
+        SpoFragment fragment = new SpoFragment();
         return fragment;
     }
 
@@ -85,27 +86,26 @@ public class PMFragment extends Fragment {
     public void onDestroy() {
         getActivity().unregisterReceiver(receiver);
         super.onDestroy();
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_pm, container, false);
+        return inflater.inflate(R.layout.fragment_spo, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        pmChart = getActivity().findViewById(R.id.pm_lineView);
-        pmChart.setYLables(yLables);
-        pmChart.setYValues(yValues);
-        pmChart.setXValues(xValues);
-        pmChart.setLableCountY(yLables.size());
-        pmChart.invalidate();
+        spoChart = getActivity().findViewById(R.id.spo_lineView);
+        spoChart.setXValues(xValues);
+        spoChart.setYValues(yValues);
+        spoChart.setYLables(yLables);
+        spoChart.setLableCountY(yLables.size());
+        spoChart.invalidate();
 
-        IntentFilter filter = new IntentFilter(PM25_RECEIVE_MESSAGE);
+        IntentFilter filter = new IntentFilter(XUEYANG_RECEIVE_MESSAGE);
         receiver = new MessageReceiver();
         getActivity().registerReceiver(receiver,filter);
     }

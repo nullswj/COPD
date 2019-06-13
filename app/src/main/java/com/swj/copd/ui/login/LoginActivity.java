@@ -25,6 +25,11 @@ import android.widget.Toast;
 
 import com.swj.copd.DisplayActivity;
 import com.swj.copd.R;
+import com.swj.copd.io.CopdClient;
+
+import static com.swj.copd.service.DataIntentService.startPm25ReceiveMessage;
+import static com.swj.copd.service.DataIntentService.startTiwenReceiveMessage;
+import static com.swj.copd.service.DataIntentService.startXueyangReceiveMessage;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -112,6 +117,24 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+//                try {
+//                    CopdClient xueyang = new CopdClient("47.106.151.249", 8082,0);
+//                    xueyang.run();
+//                    CopdClient tiwen = new CopdClient("47.106.151.249", 8082,1);
+//                    tiwen.run();
+//                    CopdClient pm = new CopdClient("47.106.151.249", 8082,2);
+//                    pm.run();
+//                } catch (InterruptedException e) {
+//                    // TODO Auto-generated catch block
+//                    e.printStackTrace();
+//                }
+
+                    startXueyangReceiveMessage(LoginActivity.this);
+//                    startTiwenReceiveMessage(LoginActivity.this);
+//                    startPm25ReceiveMessage(LoginActivity.this);
+
+
                 loadingProgressBar.setVisibility(View.VISIBLE);
                 loginViewModel.login(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
