@@ -1,5 +1,7 @@
 package com.swj.copd.io;
 
+import android.util.Log;
+
 import java.nio.charset.Charset;
 
 import io.netty.buffer.ByteBuf;
@@ -7,6 +9,8 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
 
 public class ProtocolEncoder extends MessageToByteEncoder<ProtocolMsg> {
+
+    private static final String TAG = "ProtocolEncoder";
 
     public ProtocolEncoder() {
         // TODO Auto-generated constructor stub
@@ -44,6 +48,7 @@ public class ProtocolEncoder extends MessageToByteEncoder<ProtocolMsg> {
     @Override
     protected void encode(ChannelHandlerContext ctx, ProtocolMsg msg,
                           ByteBuf out) throws Exception {
+        Log.e(TAG, "开始编码" );
         if (msg == null | msg.getProtocolHeader() == null) {
             throw new Exception("The encode message is null");
         }

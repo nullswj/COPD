@@ -1,5 +1,7 @@
 package com.swj.copd.io;
 
+import android.util.Log;
+
 import java.nio.charset.StandardCharsets;
 
 import io.netty.buffer.ByteBuf;
@@ -7,6 +9,8 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 
 public class ProtocolDecoder extends LengthFieldBasedFrameDecoder {
+
+    private static final String TAG = "ProtocolDecoder";
     private static final int HEADER_SIZE = 14;
 
     private byte magic;         // 帧头
@@ -26,6 +30,7 @@ public class ProtocolDecoder extends LengthFieldBasedFrameDecoder {
                            int lengthFieldLength, int lengthAdjustment, int initialBytesToStrip) {
         super(maxFrameLength, lengthFieldOffset, lengthFieldLength,
                 lengthAdjustment, initialBytesToStrip);
+        Log.e(TAG, "创建解码器");
     }
 
     /**
@@ -47,6 +52,7 @@ public class ProtocolDecoder extends LengthFieldBasedFrameDecoder {
 
     @Override
     protected ProtocolMsg decode(ChannelHandlerContext ctx, ByteBuf in2) throws Exception {
+        Log.e(TAG, "开始解码");
         ByteBuf in = (ByteBuf) super.decode(ctx, in2);
         if (in == null) {
             return null;

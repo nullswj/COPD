@@ -131,8 +131,8 @@ public class LoginActivity extends AppCompatActivity {
 //                }
 
                     startXueyangReceiveMessage(LoginActivity.this);
-//                    startTiwenReceiveMessage(LoginActivity.this);
-//                    startPm25ReceiveMessage(LoginActivity.this);
+                    startTiwenReceiveMessage(LoginActivity.this);
+                    startPm25ReceiveMessage(LoginActivity.this);
 
 
                 loadingProgressBar.setVisibility(View.VISIBLE);

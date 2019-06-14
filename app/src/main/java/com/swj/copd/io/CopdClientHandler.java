@@ -36,7 +36,6 @@ public class CopdClientHandler extends SimpleChannelInboundHandler<Object> {
         if(msg != null)
         {
             ProtocolMsg message = msg;
-            msg = null;
             return message;
         }
         else

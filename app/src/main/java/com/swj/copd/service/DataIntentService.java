@@ -98,27 +98,27 @@ public class DataIntentService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        Log.e(TAG, "进入服务1");
+        Log.e(TAG, "进入血氧服务1");
         if (intent != null)
         {
-            Log.e(TAG, "进入服务2");
+            Log.e(TAG, "进入血氧服务2");
             final String action = intent.getAction();
             Log.e(TAG, "Action = "+action );
             if (XUEYANG_RECEIVE_MESSAGE.equals(action)) {
                 try {
                     while (true) {
-                        Thread.sleep(2000);
-                        Log.e(TAG, "进入服务3");
+                        Thread.sleep(10000);
+                        Log.e(TAG, "进入血氧服务3");
                         ProtocolMsg protocolMsg = null;
                         CopdClientHandler handler = xueyangclient.getHandler();
                         protocolMsg = handler.getMessage();
                         if(protocolMsg != null) {
                             String msgBody = protocolMsg.getBody();
                             handleAction(msgBody,XUEYANG_RECEIVE_MESSAGE);
-                            Log.e(TAG, msgBody);
+                            Log.e(TAG, "血氧"+msgBody);
                         }
                         else
-                            Log.e(TAG, "protocolMsg为空" );
+                            Log.e(TAG, "血氧：protocolMsg为空" );
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -130,14 +130,19 @@ public class DataIntentService extends IntentService {
                 {
                     while (true)
                     {
-                        Log.e(TAG, "进入服务4");
+                        Thread.sleep(10000);
+                        Log.e(TAG, "进入体温服务1");
                         ProtocolMsg protocolMsg = null;
                         protocolMsg = tiwenclient.getHandler().getMessage();
                         if(protocolMsg != null)
                         {
                             String msgBody = protocolMsg.getBody();
                             handleAction(msgBody,TIWEN_RECEIVE_MESSAGE);
-                            Log.e(TAG, msgBody);
+                            Log.e(TAG, "体温"+msgBody);
+                        }
+                        else
+                        {
+                            Log.e(TAG, "体温：protocolMsg为空" );
                         }
                     }
                 } catch (Exception e) {
@@ -150,14 +155,18 @@ public class DataIntentService extends IntentService {
                 {
                     while (true)
                     {
-                        Log.e(TAG, "进入服务5");
+                        Log.e(TAG, "进入PM服务");
                         ProtocolMsg protocolMsg = null;
                         protocolMsg = pm25client.getHandler().getMessage();
                         if(protocolMsg != null)
                         {
                             String msgBody = protocolMsg.getBody();
                             handleAction(msgBody,PM25_RECEIVE_MESSAGE);
-                            Log.e(TAG, msgBody);
+                            Log.e(TAG, "PM"+msgBody);
+                        }
+                        else
+                        {
+                            Log.e(TAG, "PM：protocolMsg为空" );
                         }
                     }
                 } catch (Exception e) {

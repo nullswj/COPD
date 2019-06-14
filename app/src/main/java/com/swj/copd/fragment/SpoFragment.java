@@ -10,6 +10,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import com.swj.copd.view.LineView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +36,8 @@ import static com.swj.copd.service.DataIntentService.XUEYANG_RECEIVE_MESSAGE;
  */
 public class SpoFragment extends Fragment {
 
+    private static final String TAG = "SpoFragment";
+
     private LineView spoChart;
 
     private List<String> xValues = new ArrayList<>();
@@ -47,17 +51,16 @@ public class SpoFragment extends Fragment {
 
     private void initData()
     {
+        yLables.add("0.1");
+        yLables.add("0.2");
+        yLables.add("0.3");
+        yLables.add("0.4");
+        yLables.add("0.5");
+        yLables.add("0.6");
+        yLables.add("0.7");
+        yLables.add("0.8");
+        yLables.add("0.9");
         yLables.add("1");
-        yLables.add("2");
-        yLables.add("3");
-        yLables.add("4");
-        yLables.add("5");
-        yLables.add("6");
-        yLables.add("7");
-        yLables.add("8");
-        yLables.add("9");
-        yLables.add("10");
-        yLables.add("11");
     }
 
     public SpoFragment() {
@@ -115,22 +118,28 @@ public class SpoFragment extends Fragment {
         @Override
         public void onReceive(Context context, Intent intent) {
             String msg = intent.getStringExtra("msg");
+            Log.e(TAG, "收到广播" );
             try {
                 JSONArray jsonArray = new JSONArray(msg);
                 int len = jsonArray.length();
                 for(int i = 0; i < len; i++)
                 {
+                    JSONObject object = jsonArray.getJSONObject(i);
+                    Log.e(TAG, "JSON "+object );
+                    String date = (String)object.get("dateTime");
+                    char[] chars = date.toCharArray();
+                    yValues.add(Float.parseFloat((String)object.get("value")));
 
+                    String mindate = ""+chars[11]+chars[12]+chars[13]+chars[14]+chars[15];
+                    xValues.add(mindate);
                 }
+                spoChart.setXValues(xValues);
+                spoChart.setYValues(yValues);
+                spoChart.invalidate();
+                Log.e(TAG, "设置成功" );
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-//            yValues.add(Float.parseFloat(value));
-//            xValues.add(time);
-//            temperatureChart.setXValues(xValues);
-//            temperatureChart.setYLables(yLables);
-//            temperatureChart.setYValues(yValues);
-//            temperatureChart.invalidate();
         }
     }
 

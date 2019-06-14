@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.swj.copd.fragment.PMFragment;
+import com.swj.copd.fragment.SRFragment;
 import com.swj.copd.fragment.SpoFragment;
 import com.swj.copd.fragment.TemperatureFragment;
 
@@ -12,10 +13,12 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
 public class DisplayActivity extends AppCompatActivity {
+    private static final String TAG = "DisplayActivity";
     private TextView mTextMessage;
 
     BottomNavigationView navView;
@@ -25,6 +28,8 @@ public class DisplayActivity extends AppCompatActivity {
     private Fragment pmFragment;
 
     private Fragment spoFragment;
+
+    private Fragment srFragment;
 
     private Fragment[] fragments;
 
@@ -57,6 +62,15 @@ public class DisplayActivity extends AppCompatActivity {
                     if(lastFragment != 2)
                     {
                         switchFragment(lastFragment,2);
+                        lastFragment = 2;
+                    }
+                    return true;
+                case R.id.sr:
+                    mTextMessage.setText(R.string.sr);
+                    if(lastFragment != 3)
+                    {
+                        switchFragment(lastFragment,3);
+                        lastFragment = 3;
                     }
                     return true;
             }
@@ -79,7 +93,8 @@ public class DisplayActivity extends AppCompatActivity {
         temperatureFragment = TemperatureFragment.newInstance();
         pmFragment = PMFragment.newInstance();
         spoFragment = SpoFragment.newInstance();
-        fragments = new Fragment[]{temperatureFragment,pmFragment,spoFragment};
+        srFragment = SRFragment.newInstance();
+        fragments = new Fragment[]{temperatureFragment,pmFragment,spoFragment,srFragment};
 
         switchFragment(lastFragment,0);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -89,9 +104,10 @@ public class DisplayActivity extends AppCompatActivity {
     {
         FragmentTransaction transaction =getSupportFragmentManager().beginTransaction();
         transaction.hide(fragments[lastfragment]);//隐藏上个Fragment
+        Log.e(TAG, "碎片切换: "+index );
+        Log.e(TAG, "碎片隐藏: "+lastfragment );
 
-        if(!fragments[index].isAdded())
-        {
+        if(!fragments[index].isAdded()) {
             transaction.add(R.id.fragment,fragments[index]);
         }
         transaction.show(fragments[index]).commitAllowingStateLoss();

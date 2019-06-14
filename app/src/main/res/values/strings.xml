@@ -13,10 +13,11 @@
     <string name="login_failed">"Login failed"</string>
 
     <string name="title_activity_display">DisplayActivity</string>
-    <string name="title_home">Temperature</string>
+    <string name="title_home">温度</string>
     <string name="title_dashboard">PM2.5</string>
     <string name="title_notifications">血氧饱和度</string>
     <string name="title_activity_settings">Settings</string>
+    <string name="sr">问卷</string>
 
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>

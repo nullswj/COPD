@@ -53,7 +53,6 @@ public class CopdClient {
 
         EventLoopGroup workerGroup = new NioEventLoopGroup();
 
-        try {
             Bootstrap b = new Bootstrap();
             b.group(workerGroup);
             b.channel(NioSocketChannel.class);
@@ -61,8 +60,7 @@ public class CopdClient {
             b.handler(new ChannelInitializer<SocketChannel>() {
                 @Override
                 public void initChannel(SocketChannel ch) throws Exception {
-                    ch.pipeline().addLast(
-                            "decoder",
+                    ch.pipeline().addLast("decoder",
                             new ProtocolDecoder(MAX_FRAME_LENGTH,
                                     LENGTH_FIELD_OFFSET, LENGTH_FIELD_LENGTH,
                                     LENGTH_ADJUSTMENT, INITIAL_BYTES_TO_STRIP));
@@ -85,11 +83,12 @@ public class CopdClient {
             protocolHeader.setMagic((byte) 0x01);
             if(type == 0)   tb = (byte) 0x01;
             else if(type == 1)  tb = (byte)0x02;
-            else tb = (byte)0x03;
+            else if (type == 2) tb = (byte)0x03;
+            else tb = (byte)0x04;
             protocolHeader.setDataType(tb);
             protocolHeader.setTerminalID(11);
             protocolHeader.setTimestamp(Integer.valueOf(String.valueOf(System.currentTimeMillis() / 1000)));
-            StringBuilder body = new StringBuilder("I am coming!");
+            StringBuilder body = new StringBuilder(com.swj.copd.fragment.SRFragment.message);
             StringBuilder sb = new StringBuilder();
             sb.append(repeat(body,1));
 
@@ -106,9 +105,6 @@ public class CopdClient {
             //}
             // 等待连接关闭
             // f.channel().closeFuture().sync();
-        } finally {
-            workerGroup.shutdownGracefully();
-        }
     }
 
 }
