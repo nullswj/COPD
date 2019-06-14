@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.swj.copd.R;
 import com.swj.copd.view.LineView;
@@ -122,17 +123,20 @@ public class SpoFragment extends Fragment {
             try {
                 JSONArray jsonArray = new JSONArray(msg);
                 int len = jsonArray.length();
-                for(int i = 0; i < len; i++)
+                for(int i = 0; i < 50; i++)
                 {
                     JSONObject object = jsonArray.getJSONObject(i);
                     Log.e(TAG, "JSON "+object );
                     String date = (String)object.get("dateTime");
                     char[] chars = date.toCharArray();
-                    yValues.add(Float.parseFloat((String)object.get("value")));
+                    yValues.add(Float.parseFloat((String)object.get("value"))*25);
 
                     String mindate = ""+chars[11]+chars[12]+chars[13]+chars[14]+chars[15];
                     xValues.add(mindate);
                 }
+                JSONObject object = jsonArray.getJSONObject(50);
+                Toast.makeText(getActivity(),"是否报警"+object.getBoolean("isWarning"),Toast.LENGTH_LONG).show();
+
                 spoChart.setXValues(xValues);
                 spoChart.setYValues(yValues);
                 spoChart.invalidate();

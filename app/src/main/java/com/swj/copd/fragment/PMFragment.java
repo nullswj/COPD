@@ -25,7 +25,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.swj.copd.service.DataIntentService.PM25_RECEIVE_MESSAGE;
+import static com.swj.copd.service.PMIntentService.PM25_RECEIVE_MESSAGE;
+
 
 /**
  * A simple {@link Fragment} subclass.

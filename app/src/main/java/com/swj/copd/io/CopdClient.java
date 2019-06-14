@@ -80,24 +80,29 @@ public class CopdClient {
             // 发送消息给服务器
             ProtocolMsg msg = new ProtocolMsg();
             ProtocolHeader protocolHeader = new ProtocolHeader();
+
             protocolHeader.setMagic((byte) 0x01);
             if(type == 0)   tb = (byte) 0x01;
             else if(type == 1)  tb = (byte)0x02;
             else if (type == 2) tb = (byte)0x03;
-            else tb = (byte)0x04;
+            else
+            {
+                tb = (byte)0x04;
+                protocolHeader.setMagic((byte) 0x02);
+            }
             protocolHeader.setDataType(tb);
             protocolHeader.setTerminalID(11);
             protocolHeader.setTimestamp(Integer.valueOf(String.valueOf(System.currentTimeMillis() / 1000)));
             StringBuilder body = new StringBuilder(com.swj.copd.fragment.SRFragment.message);
             StringBuilder sb = new StringBuilder();
-            sb.append(repeat(body,1));
+            sb.append(body);
 
             byte[] bodyBytes = sb.toString().getBytes(Charset.forName("utf-8"));
             int bodySize = bodyBytes.length;
             protocolHeader.setLen(bodySize);
 
             msg.setProtocolHeader(protocolHeader);
-            msg.setBody(bodyBytes.toString());
+            msg.setBody(body.toString());
 
             f.channel().writeAndFlush(msg);
             Log.e(TAG, body.toString());

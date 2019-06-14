@@ -25,11 +25,11 @@ import android.widget.Toast;
 
 import com.swj.copd.DisplayActivity;
 import com.swj.copd.R;
-import com.swj.copd.io.CopdClient;
 
-import static com.swj.copd.service.DataIntentService.startPm25ReceiveMessage;
-import static com.swj.copd.service.DataIntentService.startTiwenReceiveMessage;
 import static com.swj.copd.service.DataIntentService.startXueyangReceiveMessage;
+import static com.swj.copd.service.PMIntentService.startPm25ReceiveMessage;
+import static com.swj.copd.service.TemIntentService.startTiwenReceiveMessage;
+
 
 public class LoginActivity extends AppCompatActivity {
 

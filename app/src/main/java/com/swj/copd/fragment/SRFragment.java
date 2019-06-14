@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.swj.copd.R;
@@ -22,7 +23,7 @@ import com.swj.copd.io.CopdClient;
  * Use the {@link SRFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SRFragment extends Fragment implements View.OnClickListener{
+public class SRFragment extends Fragment{
 
     private static final String TAG = "SRFragment";
 
@@ -71,30 +72,30 @@ public class SRFragment extends Fragment implements View.OnClickListener{
         text_weight = getActivity().findViewById(R.id.tizhong);
         text_time = getActivity().findViewById(R.id.shijian);
         btn_submit = getActivity().findViewById(R.id.btn_submit);
-        btn_submit.setOnClickListener(this);
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (getId())
-        {
-            case R.id.btn_submit:
+        btn_submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 String height = text_height.getEditText().getText().toString();
                 String weight = text_weight.getEditText().getText().toString();
                 String time = text_time.getEditText().getText().toString();
 
-                message = "height:"+height+'\n'
-                                +"weight:"+weight+'\n'
-                                +"time:"+time+'\n';
+                message = height+',' +weight+',' +time;
+
+                Log.e(TAG, "mesage"+message);
+
 //
 
                 Log.e(TAG, "srclient创建成功");
                 try {
-                    CopdClient srclient = new CopdClient("47.106.151.249", 8082,3);
+                    CopdClient srclient = new CopdClient("47.106.151.249", 8082,4);
                     srclient.run();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-        }
+
+                Toast.makeText(getActivity(),"提交成功",Toast.LENGTH_LONG).show();
+            }
+        });
     }
+
 }

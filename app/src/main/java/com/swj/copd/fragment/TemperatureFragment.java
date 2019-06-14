@@ -13,7 +13,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.swj.copd.R;
 import com.swj.copd.view.LineView;
 
@@ -24,7 +26,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.swj.copd.service.DataIntentService.TIWEN_RECEIVE_MESSAGE;
+import static com.swj.copd.service.TemIntentService.TIWEN_RECEIVE_MESSAGE;
 
 
 /**
@@ -125,7 +127,7 @@ public class TemperatureFragment extends Fragment {
                 for(int i = 0; i < len; i++)
                 {
                     JSONObject object = jsonArray.getJSONObject(i);
-                    yValues.add((float) object.getDouble("value"));
+                    yValues.add(((float) object.getDouble("value")));
                     String date = object.getString("dateTime");
                     char[] chars = date.toCharArray();
                     String mindate = ""+chars[11]+chars[12]+chars[13]+chars[14]+chars[15];

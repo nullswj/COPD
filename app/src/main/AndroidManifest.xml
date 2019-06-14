@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.swj.copd">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -12,8 +12,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <service
-            android:name=".service.DataIntentService"
+            android:name=".service.PMIntentService"
             android:exported="false"></service>
+        <service
+            android:name=".service.TemIntentService"
+            android:exported="false" />
+        <service
+            android:name=".service.DataIntentService"
+            android:exported="false" />
 
         <activity
             android:name=".DisplayActivity"
